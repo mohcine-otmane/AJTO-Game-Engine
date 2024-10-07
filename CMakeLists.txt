@@ -14,7 +14,7 @@ include(FetchContent)
 FetchContent_Declare(SFML SOURCE_DIR "${CMAKE_CURRENT_LIST_DIR}/SFML/")
 FetchContent_MakeAvailable(SFML)
 
-add_executable(main src/main.cpp src/Ball.cpp)
+add_executable(main src/main.cpp src/Ball.cpp src/Physics.cpp)
 target_link_libraries(main PRIVATE sfml-graphics)
 target_compile_features(main PRIVATE cxx_std_17)
 
