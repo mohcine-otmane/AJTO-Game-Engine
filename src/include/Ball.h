@@ -20,4 +20,4 @@ private:
     std::vector<sf::Vector2f> positions; // Stores the history of positions
 };
 
-#endif // BALL_H
+#endif
