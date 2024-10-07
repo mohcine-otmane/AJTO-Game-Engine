@@ -10,6 +10,8 @@ FetchContent_Declare(SFML
     GIT_TAG 2.6.x
     GIT_SHALLOW ON)
 FetchContent_MakeAvailable(SFML)
+#setting the include directory 
+include_directories(include)
 
 add_executable(main src/main.cpp src/Ball.cpp)
 target_link_libraries(main PRIVATE sfml-graphics)
