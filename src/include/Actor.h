@@ -11,9 +11,9 @@ class Actor
 public:
     Actor(sf::Vector2f position, sf::Vector2f speed);
 
-    
-    void Move(float x, float y);
+    void MoveTo(float x, float y);
     void Physics();
+    void Move(sf::Event event);
     void Render(sf::RenderWindow *window);
     ~Actor();
 
@@ -27,12 +27,6 @@ private:
     sf::ConvexShape CollisionShape;
     sf::RectangleShape DefaultShape;
 };
-
-
-
-
-
-
 
 
 

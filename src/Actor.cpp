@@ -12,19 +12,8 @@ Actor::Actor(sf::Vector2f position, sf::Vector2f speed)
     this->DefaultShape.setFillColor(sf::Color(255,0,0));
 }
 
-void Actor::Move(float x, float y) {
-    if(x>0) {
-        this->position.x += this->speed.x;
-    } else if (x<0)
-    {
-        this->position.x -= this->speed.x;
-    }
-    if(y>0) {
-        this->position.y -= this->speed.y;
-    } else if (y<0)
-    {
-        this->position.y += this->speed.y;
-    }
+void Actor::MoveTo(float x, float y) {
+    this->position = sf::Vector2f(x,y);
 }
 
 
@@ -35,12 +24,13 @@ void Actor::Physics() {
 }
 
 
+void Actor::Move(sf::Event event) {
+    // Controls go here
+}
+
 void Actor::Render(sf::RenderWindow* window) {
     window->draw(this->DefaultShape);
 }
-
-
-
 
 
 Actor::~Actor()
