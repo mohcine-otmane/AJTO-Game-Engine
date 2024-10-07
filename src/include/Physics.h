@@ -10,10 +10,13 @@ public:
     Physics(/* args */);
     ~Physics();
 
-private:
-    sf::Vector2f Gravity = sf::Vector2f(0,0);
+    void gravity();
     
 
+private:
+    sf::Vector2f Gravity = sf::Vector2f(0,9.81f);
+    bool GravityOn = false;
+    sf::Vector2f Wind = sf::Vector2f(0,0);
 };
 
 
