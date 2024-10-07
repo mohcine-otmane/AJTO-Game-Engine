@@ -9,6 +9,7 @@ Actor::Actor(sf::Vector2f position, sf::Vector2f speed)
 
     this->DefaultShape.setSize(sf::Vector2f(100.f,100.f));
     this->DefaultShape.setPosition(position);
+    this->DefaultShape.setFillColor(sf::Color(255,0,0));
 }
 
 void Actor::Move(float x, float y) {
