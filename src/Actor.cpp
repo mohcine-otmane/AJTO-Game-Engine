@@ -1,6 +1,6 @@
-#include "include\Actor.h"
+#include "include/Actor.h"
 #include <SFML/Graphics.hpp>
-
+#include "include/Physics.h"
 
 Actor::Actor(sf::Vector2f position, sf::Vector2f speed)
 {
@@ -23,6 +23,13 @@ void Actor::Move(float x, float y) {
     } else if (y<0)
     {
         this->position.y += this->speed.y;
+    }
+}
+
+
+void Actor::Physics() {
+    if(gravity) {
+        // this->position.y += 
     }
 }
 
