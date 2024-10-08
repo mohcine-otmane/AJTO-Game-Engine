@@ -4,19 +4,24 @@
 #include "include\Actor.h"
 #include <filesystem>
 #include <iostream>
+#include "include/Level.h"
 
 int main() {
 
     // Instances
 
     Actor player(sf::Vector2f(100.f,100.f),sf::Vector2f(0.1f,0.1f),"assets/Run.png",8);
-
+    Level level(10, 10, 32);
 
     sf::RenderWindow window(sf::VideoMode(800, 600), "Multiple Balls with Collision Detection");
 
 
      sf::Clock clock;
 
+    sf::Texture tileTexture;
+    if (!tileTexture.loadFromFile("assets/Tileset.png")) {
+        return -1;
+    }
 
 
     while (window.isOpen()) {
@@ -37,8 +42,9 @@ int main() {
         player.Update(deltaTime);
 
         
-
+        level.Grid(window, tileTexture);
         player.Render(&window);
+
 
         window.display();
     }
