@@ -2,19 +2,25 @@
 #include <vector>
 #include "include\Physics.h"
 #include "include\Actor.h"
+#include <filesystem>
+#include <iostream>
 
 int main() {
 
     // Instances
 
-    Actor player(sf::Vector2f(100.f,100.f),sf::Vector2f(1.f,1.f));
+    Actor player(sf::Vector2f(100.f,100.f),sf::Vector2f(0.1f,0.1f),"assets/Run.png",8);
 
-    // Create a window
+
     sf::RenderWindow window(sf::VideoMode(800, 600), "Multiple Balls with Collision Detection");
 
-    // Game loop
+
+     sf::Clock clock;
+
+
+
     while (window.isOpen()) {
-        // Process events
+
         sf::Event event;
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed)
@@ -22,13 +28,18 @@ int main() {
         }
 
         
-
-        // Clear the window with black color
         window.clear(sf::Color::Black);
+
+        player.Move(&event);
+        player.Physics();
+
+        float deltaTime = clock.restart().asSeconds();
+        player.Update(deltaTime);
+
+        
 
         player.Render(&window);
 
-        // Display the contents of the window
         window.display();
     }
 

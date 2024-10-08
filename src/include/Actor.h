@@ -2,34 +2,32 @@
 #define ACTOR_H
 
 #include <SFML/Graphics.hpp>
+#include <string>
 
-
-// Actors may include players, enemies, objects like a arrows
-class Actor
-{
-
+class Actor {
 public:
-    Actor(sf::Vector2f position, sf::Vector2f speed);
-
+    Actor(sf::Vector2f position, sf::Vector2f speed, std::string TexturePath, int numberOfFrames);
+    
     void MoveTo(float x, float y);
+    void Move(sf::Event* event);
     void Physics();
-    void Move(sf::Event event);
-    void Render(sf::RenderWindow *window);
+    void Render(sf::RenderWindow* window);
+    void Update(float deltaTime);
+
     ~Actor();
 
 private:
     sf::Vector2f position;
     sf::Vector2f speed;
-    sf::Vector2f acceleration;
-    bool gravity = true;
-    
-    sf::Sprite Sprite;
-    sf::ConvexShape CollisionShape;
     sf::RectangleShape DefaultShape;
+    sf::Texture texture;
+    sf::Sprite Sprite;
+
+    int numberOfFrames;       
+    int currentFrame;         
+    float animationSpeed;     
+    float elapsedTime;        
+    bool gravity = false;    
 };
-
-
-
-
 
 #endif

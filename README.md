@@ -4,7 +4,6 @@
 **Motto**: Make a game engine instead of getting therapy
 **Date**: October 2024
 
-
 ## Specifications Draft
 
 - **Simplistic 32X32 Sprites?** (Hell yeah!)
