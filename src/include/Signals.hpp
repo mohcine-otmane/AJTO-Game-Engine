@@ -1,68 +1,40 @@
-/*Note*/
-/*Signals can be emitted by any object and they will all be run in one separate thread*/
-
 #ifndef SIGNALS_H
 #define SIGNALS_H
 
-#include<vector>
-#include "Signal.h"
+#include <vector>
+#include <thread>
+#include <mutex>
+#include <functional>
 #include <SFML/Graphics.hpp>
 
-struct Signal{
+struct Signal {
     float duration;
+    sf::Clock startTime;
+    bool repeating;
+    int repeatCount;
+    std::string tag;
+    bool paused;
+    std::function<void()> onEmit;
+    std::function<void()> onExpire;
 };
 
-
-
-class Signals
-{
-
+class Signals {
 public:
-    Signals(/* args */);
-    bool Emit(float duration);
-    bool SignalLoop(Signal signal);
+    Signals();
+    void Emit(float duration, bool repeating = false, int repeatCount = 0, const std::string& tag = "");
+    void Start();
+    void Stop();
+    void PauseSignal(const std::string& tag);
+    void ResumeSignal(const std::string& tag);
+    void ClearSignals(const std::string& tag = "");
     ~Signals();
 
-
-
 private:
-    std::vector<Signal>* VecSignals;
+    void Update();  // Internal thread loop
+    std::vector<Signal> activeSignals;
+    std::mutex signalMutex;  // For thread-safe access
+    bool running;
+    std::thread signalThread;
 };
-
-Signals::Signals(/* args */)
-{
-}
-
-
-bool Signals::Emit(float duration) {
-    Signal signal;
-    // Init the signal to be added to the VecSignals vector
-    signal.duration = duration;
-
-
-    VecSignals->push_back(signal);
-}
-
-bool Signals::SignalLoop(Signal signal){
-    sf::Clock clock;
-    while (clock.getElapsedTime().asSeconds()<signal.duration)
-    {
-        /* code */
-    }
-    
-}
-
-
-
-Signals::~Signals()
-{
-}
-
-
-
-
-
-
-
 
 #endif

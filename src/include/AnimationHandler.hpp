@@ -1,15 +1,24 @@
-#ifndef ANIMATIONHANDLER_H
-#define ANIMATIONHANDLER_H
+#ifndef ANIMATION_H
+#define ANIMATION_H
 
 #include<vector>
 #include <SFML/Graphics.hpp>
 
-
 struct Frame
 {
-    int FPS = 60;
+    float duration;
     sf::Sprite* sprite;
 };
+
+struct Animation
+{
+    std::string AnimationName;
+    sf::Sprite* AnimationSprite;
+    int NumberFrames;
+    std::vector<Frame*> VecFrames;
+    bool LoopAnimation = true;
+};
+
 
 
 class AnimationHandler
@@ -23,7 +32,7 @@ public:
 
 
 private:
-    std::vector<Frame*> VecFrames;
+    
 };
 
 AnimationHandler::AnimationHandler(/* args */)
