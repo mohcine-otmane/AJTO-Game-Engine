@@ -1,16 +1,16 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
-#include "include\Physics.h"
-#include "include\Actor.h"
+#include "include\Physics.hpp"
+#include "include\Actor.hpp"
 #include <filesystem>
 #include <iostream>
-#include "include/Level.h"
+#include "include\Level.hpp"
 
 int main() {
 
     // Instances
 
-    Actor player(sf::Vector2f(100.f,100.f),sf::Vector2f(0.1f,0.1f),"assets/Run.png",8);
+    Actor player(sf::Vector2f(100.f,100.f),sf::Vector2f(0.5f,0.5f),"assets/Run.png",8);
     Level level(10, 10, 32);
 
     sf::RenderWindow window(sf::VideoMode(800, 600), "Multiple Balls with Collision Detection");

@@ -1,6 +1,6 @@
-#include "include/Actor.h"
+#include "include\Actor.hpp"
 #include <SFML/Graphics.hpp>
-#include "include/Physics.h"
+#include "include\Physics.hpp"
 #include <iostream>
 #include <filesystem>
 
