@@ -1,5 +1,5 @@
 
-#include "Signals.hpp"
+#include "include/Signals.hpp"
 
 Signals::Signals() : running(false) {}
 
