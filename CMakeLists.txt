@@ -14,9 +14,11 @@ include(FetchContent)
 FetchContent_Declare(SFML SOURCE_DIR "${CMAKE_CURRENT_LIST_DIR}/SFML/")
 FetchContent_MakeAvailable(SFML)
 
-add_executable(main src/main.cpp src/Physics.cpp src/Actor.cpp src/Level.cpp src/Animation.cpp)
+add_executable(main src/main.cpp src/Physics.cpp src/Actor.cpp src/Level.cpp src/Animation.cpp src/Signals.cpp)
 target_link_libraries(main PRIVATE sfml-graphics)
 target_compile_features(main PRIVATE cxx_std_17)
+
+include_directories(${PROJECT_SOURCE_DIR}/include)
 
 if(WIN32)
     add_custom_command(

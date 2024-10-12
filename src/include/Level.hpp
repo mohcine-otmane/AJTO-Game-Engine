@@ -1,3 +1,7 @@
+/*--- The Level class handles levels in the game, each level has (Tile map, Collision map, Physics map, Level rules...) ---*/
+/*--------------------- Ignore it for now ---------------------*/
+
+
 #ifndef LEVEL_H
 #define LEVEL_H
 
