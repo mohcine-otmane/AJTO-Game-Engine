@@ -28,7 +28,10 @@ public:
     bool setSprite(const std::string& spritePath);
 
     // Each animation sprite has frames, this function separates the frames and puts them in a vector.
-    void setFrames();
+    void setFrames(bool reversed);
+
+    
+    
     bool playAnimation(float deltaTime);
 
     sf::Sprite& getSprite() { return AnimationSprite; } // This is a getter function that we use for debugging
