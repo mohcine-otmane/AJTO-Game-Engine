@@ -10,7 +10,7 @@ Actor::Actor(sf::Vector2f position, sf::Vector2f speed):position(position), spee
 
 
 void Actor::Update(float deltaTime) {
-    
+    currentAnimation->getSprite().setPosition(position);
 }
 
 
@@ -19,7 +19,9 @@ void Actor::AddAnimation(std::string animationName, sf::Vector2i numberFrames, b
     // Animations[animationName]
 }
 
-
+void Actor::SetAnimation(std::string animationName) {
+    currentAnimation =  Animations[animationName];
+}
 
 void Actor::Render(sf::RenderWindow* window) {
     window->draw(currentAnimation->getSprite());
