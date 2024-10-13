@@ -20,26 +20,28 @@ bool Animation::setSprite(const std::string& spritePath) {
 
 }
 
-void Animation::setFrames() {
+void Animation::setFrames(bool reversed) {
     sf::Vector2u textureSize = AnimationTexture.getSize();
-
-    // This will depend on the fact that the animation sprite is well made
     sf::Vector2i frameSize(textureSize.x / NumberFrames.x, textureSize.y / NumberFrames.y);
 
-    // Select the row and column frames from the sprite.
+    std::vector<Frame> tempFrames; // Temporary vector to hold frames before reversing
+
     for (int i = 0; i < NumberFrames.x; ++i) {
         for (int j = 0; j < NumberFrames.y; ++j) {
-            Frame frame; // Instance the frame struct
-
-            // select the frame from the sprite and store it in the frame struct.
+            Frame frame;
             frame.rect = sf::IntRect(i * frameSize.x, j * frameSize.y, frameSize.x, frameSize.y);
-            // Set the frame duration.
-            frame.duration = 0.1f;
-            // Store the frame in the VecFrames vector.
-            VecFrames.push_back(frame);
+            frame.duration = 0.08f;
+            tempFrames.push_back(frame);
         }
     }
+
+    if (reversed) {
+        std::reverse(tempFrames.begin(), tempFrames.end());
+    }
+
+    VecFrames = tempFrames; // Copy the frames into VecFrames
 }
+
 
 // To keep the frame rate consistant from time to time and from machine to machine we use deltaTime.
 // deltaTime is the time deference between two refreshes
