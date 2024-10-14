@@ -21,9 +21,10 @@ public:
     // Each animation has a name, number of frames and a flag to determine whether the animation should loop or not.
     void AddAnimation(const std::string animationName, sf::Vector2i numberFrames, bool loopAnimation);
 
-
     // This function will be used to switch between animations (PS: Needs to have smooth animation transition)
     void SetAnimation(std::string animationName);
+
+    void CheckCollision(Actor *actor);
 
     ~Actor();
 
@@ -33,6 +34,7 @@ public:
     Animation* currentAnimation; // The actor has only one animation running at a given time
     sf::Vector2f position; //Position with respect to the window (or with respect of the world origin)
     sf::Vector2f speed;
+    sf::RectangleShape CollisionShape;
     
 private:
     

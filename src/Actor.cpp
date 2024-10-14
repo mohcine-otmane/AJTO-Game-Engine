@@ -23,11 +23,13 @@ void Actor::SetAnimation(std::string animationName) {
     currentAnimation =  Animations[animationName];
 }
 
-// void Actor::CheckCollision() {
-//     // if(collisionShape.getGlobalBounds().intersects(otherActor.collisionShape.getGlobalBounds())) {
 
-//     // }
-// }
+// Check when the Actor is collided with another actor
+void Actor::CheckCollision(Actor* actor) {
+    if(this->currentAnimation->getSprite().getGlobalBounds().intersects(actor->currentAnimation->getSprite().getGlobalBounds())) {
+        std::cout<<"Collision"<<std::endl;
+    }
+}
 
 void Actor::Render(sf::RenderWindow* window) {
     window->draw(currentAnimation->getSprite());

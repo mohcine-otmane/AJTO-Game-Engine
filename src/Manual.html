@@ -1,13 +1,241 @@
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AJTO Game Engine Documentation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Basic reset */
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #1b1b1b;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        h1,
+        h2,
+        h3 {
+            text-align: center;
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 15px rgba(255, 255, 255, 0.3);
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 30px;
+        }
+        
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        
+        h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+        
+        p,
+        ul,
+        li {
+            font-size: 1rem;
+            color: #e0e0e0;
+            line-height: 1.8;
+        }
+        /* Neon button styles */
+        
+        a.button {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 30px;
+            background-color: #3498db;
+            color: #ffffff;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-decoration: none;
+            transition: 0.3s ease-in-out;
+            box-shadow: 0 0 15px rgba(52, 152, 219, 0.7), 0 0 30px rgba(52, 152, 219, 0.5);
+        }
+        
+        a.button:hover {
+            background-color: #2980b9;
+            box-shadow: 0 0 30px rgba(52, 152, 219, 0.9), 0 0 50px rgba(52, 152, 219, 0.7);
+        }
+        /* Dark card-like sections */
+        
+        .section {
+            background-color: #2a2a2a;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid #333;
+        }
+        
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        ul li {
+            padding: 10px 0;
+        }
+        
+        a {
+            color: #f39c12;
+            font-weight: 500;
+            text-decoration: none;
+        }
+        
+        a:hover {
+            color: #e67e22;
+        }
+        /* Code block styling */
+        
+        code {
+            background-color: #212121;
+            color: #00e676;
+            padding: 5px 8px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        pre {
+            background-color: #2e2e2e;
+            color: #00e676;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.1);
+            border: 1px solid #333;
+            overflow-x: auto;
+        }
+        
+        .keyword {
+            color: #3498db;
+        }
+        
+        .string {
+            color: #f1c40f;
+        }
+        
+        .comment {
+            color: #7f8c8d;
+        }
+        
+        .function {
+            color: #1abc9c;
+        }
+        
+        .variable {
+            color: #e74c3c;
+        }
+        /* Container styling */
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        /* Glow effect for headings */
+        
+        h1,
+        h2 {
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+        /* Hover effect on links */
+        
+        a.button:hover {
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+        }
+    </style>
 </head>
 
 <body>
+    <div class="container">
+        <h1>AJTO Game Engine Documentation</h1>
+        <p>Welcome to the AJTO Game Engine documentation. This guide will help you install, set up, and use the engine in your projects.</p>
 
+        <div class="section">
+            <h2>1. Installation</h2>
+            <p>Follow these steps to install the AJTO Game Engine:</p>
+            <ul>
+                <li>Download the latest version from the <a href="https://github.com/mohcine-otmane/AJTO-Game-Engine" class="button">GitHub Repository</a>.</li>
+                <li>Ensure you have <code>SFML</code> installed on your system.</li>
+                <li>Navigate to the downloaded directory and run the following command to compile:</li>
+            </ul>
+            <pre><code class="keyword">g++</code> <code>main.cpp</code> -o AJTO <code>-lsfml-graphics -lsfml-window -lsfml-system</code></pre>
+        </div>
+
+        <div class="section">
+            <h2>2. Getting Started</h2>
+            <p>To create your first game using AJTO, follow these steps:</p>
+            <ul>
+                <li>Create a new C++ file and include the engine headers:</li>
+            </ul>
+            <pre><code class="keyword">#include</code> <code class="string">"Game.hpp"</code>
+<code class="keyword">#include</code> <code class="string">"Actor.hpp"</code>
+
+<code class="keyword">int</code> main() {
+    <code class="variable">AJTO</code> game;
+    game.<code class="function">SetUp</code>();
+    game.<code class="function">GameLoop</code>();
+    <code class="keyword">return</code> 0;
+}</pre>
+        </div>
+
+        <div class="section">
+            <h2>3. API Reference</h2>
+            <h3>Game Class</h3>
+            <p>The <code>Game</code> class is the base class for all games in AJTO:</p>
+            <ul>
+                <li><code>void SetUp()</code> - Initializes the game.</li>
+                <li><code>void GameLoop()</code> - Starts the game loop.</li>
+                <li><code>void UpDate(float deltaTime, sf::Event event)</code> - Updates the game state.</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>4. Example</h2>
+            <p>Here’s an example to show how to create and control an actor:</p>
+            <pre><code class="keyword">#include</code> <code class="string">"Actor.hpp"</code>
+<code class="keyword">class</code> MyGame : <code class="keyword">public</code> <code class="variable">Game</code> {
+<code class="keyword">public</code>:
+    <code class="variable">Actor</code>* player;
+
+    <code class="keyword">void</code> <code class="function">SetUp</code>() override {
+        player = <code class="keyword">new</code> <code class="variable">Actor</code>(<code class="function">sf::Vector2f</code>(100.f, 100.f), <code class="function">sf::Vector2f</code>(10.f, 10.f));
+        player-><code class="function">AddAnimation</code>("Walk", <code class="function">sf::Vector2i</code>(8, 1), true);
+        Actors["player"] = player;
+    }
+
+    <code class="keyword">void</code> <code class="function">UpDate</code>(<code class="keyword">float</code> deltaTime, <code class="variable">sf::Event</code> event) override {
+        <code class="keyword">if</code> (signalSystem.<code class="function">HasEmitted</code>("MoveRight")) {
+            player->position.x += player->speed.x * deltaTime;
+        }
+    }
+};
+
+<code class="keyword">int</code> main() {
+    MyGame game;
+    game.<code class="function">SetUp</code>();
+    game.<code class="function">GameLoop</code>();
+    <code class="keyword">return</code> 0;
+}</pre>
+        </div>
+    </div>
 </body>
 
 </html>
