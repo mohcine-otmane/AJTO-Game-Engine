@@ -10,49 +10,67 @@
 class AJTO : public Game {
 
 public:
-    // sf::RenderWindow window;
-    
-    sf::Vector2f velocity = sf::Vector2f(0,0);
+    sf::Vector2f velocity = sf::Vector2f(0, 0);  // Velocity for movement
 
+    // Actor needs to persist, so define it as a member of the class
+    Actor* player;
+    Actor* obstacle;
+
+    // Set up the game window and initialize actors
     void SetUp() override {
-        this->window.create(sf::VideoMode(800, 600), "AJTO Game Engine"); // The render window is stage on which everything is displayed
+        this->window.create(sf::VideoMode(800, 600), "AJTO Game Engine");
 
-        Actor actor(sf::Vector2f(100.f, 100.f), sf::Vector2f(10.f, 10.f));
-        actor.AddAnimation("WalkLeft", sf::Vector2i(8, 1), true); // We add a "Run" animation, this animation is still empty => we need to set the animation sprite...
-        
-        // Setting sprite for the "Run" animation
-        if (!actor.Animations["WalkLeft"]->setSprite("assets/WalkLeft.png")) {
+        // Create player actor dynamically so it persists beyond SetUp() method
+        player = new Actor(sf::Vector2f(100.f, 100.f), sf::Vector2f(10.f, 10.f));
+
+        // Add "WalkLeft" animation and set its sprite
+        player->AddAnimation("WalkLeft", sf::Vector2i(8, 1), true);
+        if (!player->Animations["WalkLeft"]->setSprite("assets/WalkLeft.png")) {
             std::cout << "Sprite Not Set" << std::endl;
         } else {
-            actor.currentAnimation = actor.Animations["WalkLeft"];
-            actor.Animations["WalkLeft"]->setFrames(true);
+            player->currentAnimation = player->Animations["WalkLeft"];
+            player->Animations["WalkLeft"]->setFrames(true);  // Enable animation frames
         }
 
-        actor.AddAnimation("WalkRight", sf::Vector2i(8, 1), true);
-
-
-        // Setting sprite for the "Walk" animation
-        if (!actor.Animations["WalkRight"]->setSprite("assets/WalkRight.png")) {
+        // Add "WalkRight" animation and set its sprite
+        player->AddAnimation("WalkRight", sf::Vector2i(8, 1), true);
+        if (!player->Animations["WalkRight"]->setSprite("assets/WalkRight.png")) {
             std::cout << "Sprite Not Set" << std::endl;
         } else {
-            actor.currentAnimation = actor.Animations["WalkRight"];
-            actor.Animations["WalkRight"]->setFrames(false);
+            player->currentAnimation = player->Animations["WalkRight"];
+            player->Animations["WalkRight"]->setFrames(false);  // Disable frame mirroring
         }
-        this->Actors["player"] = &actor;
+
+
+        // Store actor in the Actors map, using the key "player"
+        this->Actors["player"] = player;
+
+
+
+        obstacle = new Actor(sf::Vector2f(100.f, 100.f), sf::Vector2f(10.f, 10.f));
+        obstacle->AddAnimation("WalkLeft", sf::Vector2i(1, 1), true);
+        if (!obstacle->Animations["WalkLeft"]->setSprite("assets/wall.png")) {
+            std::cout << "Sprite Not Set" << std::endl;
+        } else {
+            obstacle->currentAnimation = obstacle->Animations["WalkLeft"];
+            obstacle->Animations["WalkLeft"]->setFrames(true);  // Enable animation frames
+            obstacle->Animations["WalkLeft"]->getSprite().setScale(0.5f,0.5f);
+        }
+        this->Actors["obstacle"] = obstacle;
+
     }
 
+    // Main update loop where events and game logic are handled
     void UpDate(float deltaTime, sf::Event event) override {
-            
-            // Any event that happens in the game is handled in this loop
-            while (window.pollEvent(event)) {
-                // When the X button is pressed, close the window
-                if (event.type == sf::Event::Closed)
-                    window.close();
-                
-                 // Emit signals based on key presses
-                inputManager.OnKeyPressed(&event, &signalSystem);
-            }
-            // Check if signals for movement are emitted and update the position accordingly
+        // Handle window events like closing
+        while (window.pollEvent(event)) {
+            if (event.type == sf::Event::Closed)
+                window.close();
+
+            // Emit signals for key presses using InputManager
+            inputManager.OnKeyPressed(&event, &signalSystem);
+
+            // Move player actor based on signals
             if (signalSystem.HasEmitted("MoveUp")) {
                 Actors["player"]->position.y -= Actors["player"]->speed.y;
             }
@@ -67,23 +85,29 @@ public:
                 Actors["player"]->position.x += Actors["player"]->speed.x;
                 Actors["player"]->currentAnimation = Actors["player"]->Animations["WalkRight"];
             }
+        }
 
-            // Update actor's position based on velocity and deltaTime
-            // Actors["player"]->position += velocity * deltaTime; // There is a strange bug here (When this line is commented out the window crashes)
+        // Update player actor and play the appropriate animation
+        Actors["player"]->Update();
+        Actors["player"]->Animations["WalkRight"]->playAnimation(deltaTime);
+        Actors["player"]->Animations["WalkLeft"]->playAnimation(deltaTime);
 
+        Actors["player"]->CheckCollision(obstacle);
 
-            Actors["player"]->Update();  // Update actor state such as position, health, animations
-            Actors["player"]->Animations["WalkRight"]->playAnimation(deltaTime);  // Play the "Run" animation
-            Actors["player"]->Animations["WalkLeft"]->playAnimation(deltaTime);  // Play the "Walk" animation
-
-            window.clear();  // Remove everything previously drawn unto the window
-            Actors["player"]->Render(&window);  // Render the actor (the window is passed by reference)
-            window.display();  // Display the finished frame from the buffer (frame buffer might change later)
-
-        
+        // Clear, render and display the updated game window
+        window.clear();
+        Actors["player"]->Render(&window);
+        Actors["obstacle"]->Render(&window);
+        window.display();
     }
 
+    // Destructor to clean up dynamically allocated memory
+    ~AJTO() {
+        delete player;
+    }
 };
+
+
 
 
 int main() {
