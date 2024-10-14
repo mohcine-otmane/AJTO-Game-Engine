@@ -8,6 +8,7 @@
 
 #include "Actor.hpp"
 #include "Level.hpp"
+#include "InputManager.hpp"
 
 
 class Game
@@ -16,34 +17,28 @@ class Game
 public:
     Game(/* args */);
 
-    void SetUp();
+    virtual void SetUp();
 
-    void Loop(float deltaTime);
+    virtual void UpDate(float deltaTime,sf::Event event);
+
+    void GameLoop();
 
     ~Game();
 
-private:
-
+    
+protected:
+    sf::RenderWindow window;
     // Actors will interact with each other, so any player must access any other player to check for collisions (We will find a more optimized solution later on)
-    std::vector<Actor*> VecActor; // All the actors of the game are stored here
+    sf::Clock clock;
+    float deltaTime;
+    sf::Event event;
+    std::map<std::string, Actor*> Actors; // All the actors of the game are stored here
+    InputManager inputManager;  // Input manager handles key presses
+    Signals signalSystem;      // Signal system to emit key press signals
+    
+    
 };
 
-Game::Game(/* args */)
-{
-}
-
-
-void Game::SetUp() {
-
-}
-
-void Game::Loop(float deltaTime) {
-
-}
-
-Game::~Game()
-{
-}
 
 
 
