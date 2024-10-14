@@ -15,7 +15,7 @@ public:
 
     //Because sometimes actors need not be rendered because they are off screen, we need to be able to render the actor when we like to.
     void Render(sf::RenderWindow* window);
-    void Update(float deltaTime);
+    void Update();
 
     // Each actor needs animations to come alive in the levels of the game.
     // Each animation has a name, number of frames and a flag to determine whether the animation should loop or not.
