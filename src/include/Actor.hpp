@@ -24,6 +24,8 @@ public:
     // This function will be used to switch between animations (PS: Needs to have smooth animation transition)
     void SetAnimation(std::string animationName);
 
+    void SetCollisionShape();
+
     void CheckCollision(Actor *actor);
 
     ~Actor();
@@ -34,7 +36,7 @@ public:
     Animation* currentAnimation; // The actor has only one animation running at a given time
     sf::Vector2f position; //Position with respect to the window (or with respect of the world origin)
     sf::Vector2f speed;
-    sf::RectangleShape CollisionShape;
+    sf::RectangleShape* CollisionShape;
     
 private:
     

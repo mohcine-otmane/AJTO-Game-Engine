@@ -12,6 +12,7 @@ struct Tile
 {
     sf::Vector2f TileSize;
     sf::Texture TileTexture;
+    sf::RectangleShape CollisionShape;
 };
 
 

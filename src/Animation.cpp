@@ -12,6 +12,7 @@ bool Animation::setSprite(const std::string& spritePath) {
         }
 
         AnimationSprite.setTexture(AnimationTexture); // once the texture is loaded bide it to the sprite.
+
         return true;
     } catch (const std::exception& e) {
         std::cerr << e.what() << std::endl;
