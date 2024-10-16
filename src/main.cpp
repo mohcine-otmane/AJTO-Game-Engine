@@ -6,12 +6,12 @@
 #include "include/Game.hpp"
 
 
-
 class AJTO : public Game {
 public:
     sf::Vector2f velocity = sf::Vector2f(0, 0); // Velocity for movement
     Actor* player; // Player actor
     Actor* obstacle; // Obstacle actor
+    sf::Clock  forceClock;
 
     // Set up the game window and initialize actors
     void SetUp() override {
@@ -53,6 +53,13 @@ public:
             player->currentAnimation = player->Animations["Idle"];
             player->Animations["Idle"]->setFrames(false);
         }
+
+        player->AddAnimation("AtackRight", sf::Vector2i(7, 1), true);
+        if (!player->Animations["AtackRight"]->setSprite("assets/Idle.png")) {
+            std::cout << "Player Idle Sprite Not Set" << std::endl;
+        } else {
+            player->Animations["AtackRight"]->setFrames(false);
+        }
         
         player->SetCollisionShape(); // Ensure collision shape is set
     }
@@ -79,7 +86,7 @@ public:
 
             // Handle input
             inputManager.OnKeyPressed(&event, &signalSystem);
-            HandleMovement(); // Move player based on signals
+            HandleMovement(deltaTime); // Move player based on signals
         }
         // Update actors and check for collisions
         Actors["player"]->Update();
@@ -97,26 +104,37 @@ public:
     }
 
     // Handle player movement based on signals
-    void HandleMovement() {
-        // Move player actor based on signals
-        if (signalSystem.HasEmitted("W")) {
-            Actors["player"]->position.y -= Actors["player"]->speed.y;
-        }else
-        if (signalSystem.HasEmitted("S")) {
-            Actors["player"]->position.y += Actors["player"]->speed.y;
-        }else
-        if (signalSystem.HasEmitted("A")) {
-            Actors["player"]->position.x -= Actors["player"]->speed.x;
-            Actors["player"]->currentAnimation = Actors["player"]->Animations["WalkLeft"];
-        }else
-        if (signalSystem.HasEmitted("D")) {
-            Actors["player"]->position.x += Actors["player"]->speed.x;
-            Actors["player"]->currentAnimation = Actors["player"]->Animations["WalkRight"];
-        }
-        else {
-            // Actors["player"]->currentAnimation = Actors["player"]->Animations["Idle"];
-        }
+    void HandleMovement(float deltaTime) {
+    // Reset velocity to 0 at the start of each frame
+    velocity.x = 0;
+    velocity.y = 0;
+
+    // Move player actor based on signals
+    if (signalSystem.HasEmitted("W")) {
+        velocity.y -= Actors["player"]->speed.y;
+    } else if (signalSystem.HasEmitted("S")) {
+        velocity.y += Actors["player"]->speed.y;
+    } else if (signalSystem.HasEmitted("A")) {
+        velocity.x -= Actors["player"]->speed.x;
+        // Flip the player sprite to the left
+        Actors["player"]->currentAnimation->getSprite().setScale(-1.f, 1.f);
+        Actors["player"]->currentAnimation = Actors["player"]->Animations["Walk"];
+    } else if (signalSystem.HasEmitted("D")) {
+        velocity.x += Actors["player"]->speed.x;
+        // Reset the player sprite to face right (default)
+        Actors["player"]->currentAnimation->getSprite().setScale(1.f, 1.f);
+        Actors["player"]->currentAnimation = Actors["player"]->Animations["Walk"];
     }
+
+    // If no movement is detected, switch to the Idle animation
+    if (velocity.x == 0 && velocity.y == 0) {
+        Actors["player"]->currentAnimation = Actors["player"]->Animations["Idle"];
+    }
+
+    // Update player position by adding the velocity, scaled by deltaTime
+    Actors["player"]->position += velocity * deltaTime;
+}
+
 
     // Destructor to clean up dynamically allocated memory
     ~AJTO() {
