@@ -2,7 +2,6 @@
 #include <SFML/Graphics.hpp>
 #include "include/Physics.hpp"
 #include <iostream>
-#include <filesystem>
 #include "include/Actor.hpp"
 #include "include/Game.hpp"
 
@@ -11,8 +10,8 @@ Actor::Actor(sf::Vector2f position, sf::Vector2f speed) : position(position), sp
 }
 
 // Add animations for the actor
-void Actor::AddAnimation(std::string animationName, sf::Vector2i numberFrames, bool loopAnimation) {
-    Animations[animationName] = new Animation(animationName, numberFrames, loopAnimation);
+void Actor::AddAnimation(std::string animationName, const std::string& AnimationTexturePath, sf::Vector2i numberFrames, bool loopAnimation) {
+    Animations[animationName] = new Animation(animationName, AnimationTexturePath, numberFrames, loopAnimation);
 }
 
 // Update the actor's state and collision shape
