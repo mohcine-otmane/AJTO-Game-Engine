@@ -18,11 +18,10 @@ class Animation {
 public:
 
     // I guess all of the arguments are self evident
-    Animation(std::string animationName, sf::Vector2i numberFrames, bool loopAnimation);
 
     ~Animation(); // Will be used at the end to free allocated memory.
 
-
+    Animation(std::string animationName, const std::string &AnimationTexturePath, sf::Vector2i numberFrames, bool loopAnimation);
 
     // Each animation has an animation sprite, this function loads the sprite image from its path.
     bool setSprite(const std::string& spritePath);

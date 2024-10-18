@@ -1,8 +1,13 @@
 #include "include/Animation.hpp"
 #include <iostream>
 
-Animation::Animation(std::string animationName, sf::Vector2i numberFrames, bool loopAnimation)
-    : AnimationName(animationName), NumberFrames(numberFrames), LoopAnimation(loopAnimation), currentFrame(0), elapsedTime(0.0f) {}
+Animation::Animation(std::string animationName, const std::string& AnimationTexturePath, sf::Vector2i numberFrames, bool loopAnimation)
+    : AnimationName(animationName), NumberFrames(numberFrames), LoopAnimation(loopAnimation), currentFrame(0), elapsedTime(0.0f) {
+
+        if(setSprite(AnimationTexturePath)) {
+            setFrames(false);
+        }
+    }
 
 bool Animation::setSprite(const std::string& spritePath) {
     // To avoid memory problems we use try-catch

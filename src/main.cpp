@@ -4,6 +4,13 @@
 #include "include/InputManager.hpp"
 #include "include/Signals.hpp"
 #include "include/Game.hpp"
+#include "include/AJTO.hpp"
+
+
+
+std::vector<std::string> VecTexturePaths = {"assets/WalkLeft.png", "assets/WalkRight.png", "assets/Idle.png"};
+std::vector<sf::Texture> VecTexures;
+sf::Font font;
 
 
 class AJTO : public Game {
@@ -15,6 +22,10 @@ public:
 
     // Set up the game window and initialize actors
     void SetUp() override {
+
+        aj::StoreTextures(VecTexturePaths, VecTexures);
+
+
         this->window.create(sf::VideoMode(800, 600), "AJTO Game Engine");
 
         // Create player actor dynamically
@@ -32,48 +43,19 @@ public:
 
     // Initialize player settings
     void InitializePlayer(Actor* player) {
-        player->AddAnimation("WalkLeft", sf::Vector2i(10, 1), true);
-        if (!player->Animations["WalkLeft"]->setSprite("assets/WalkLeft.png")) {
-            std::cout << "Player WalkLeft Sprite Not Set" << std::endl;
-        } else {
-            player->Animations["WalkLeft"]->setFrames(true);
-        }
-
-        player->AddAnimation("WalkRight", sf::Vector2i(10, 1), true);
-        if (!player->Animations["WalkRight"]->setSprite("assets/WalkRight.png")) {
-            std::cout << "Player WalkRight Sprite Not Set" << std::endl;
-        } else {
-            player->Animations["WalkRight"]->setFrames(false);
-        }
-
-        player->AddAnimation("Idle", sf::Vector2i(7, 1), true);
-        if (!player->Animations["Idle"]->setSprite("assets/Idle.png")) {
-            std::cout << "Player Idle Sprite Not Set" << std::endl;
-        } else {
-            player->currentAnimation = player->Animations["Idle"];
-            player->Animations["Idle"]->setFrames(false);
-        }
-
-        player->AddAnimation("AtackRight", sf::Vector2i(7, 1), true);
-        if (!player->Animations["AtackRight"]->setSprite("assets/Idle.png")) {
-            std::cout << "Player Idle Sprite Not Set" << std::endl;
-        } else {
-            player->Animations["AtackRight"]->setFrames(false);
-        }
+        player->AddAnimation("WalkLeft", "assets/WalkLeft.png", sf::Vector2i(10, 1), true);
+        player->AddAnimation("WalkRight", "assets/WalkRight.png", sf::Vector2i(10, 1), true);
+        player->AddAnimation("Idle", "assets/Idle.png", sf::Vector2i(7, 1), true);
+        player->AddAnimation("AtackRight", "assets/Idle.png", sf::Vector2i(7, 1), true);
+        obstacle->currentAnimation = obstacle->Animations["WalkLeft"];
         
         player->SetCollisionShape(); // Ensure collision shape is set
     }
 
     // Initialize obstacle settings
     void InitializeObstacle(Actor* obstacle) {
-        obstacle->AddAnimation("WalkLeft", sf::Vector2i(7, 1), true);
-        if (!obstacle->Animations["WalkLeft"]->setSprite("assets/Idle.png")) {
-            std::cout << "Obstacle Sprite Not Set" << std::endl;
-        } else {
-            obstacle->currentAnimation = obstacle->Animations["WalkLeft"];
-            obstacle->Animations["WalkLeft"]->setFrames(true);
-            // obstacle->Animations["WalkLeft"]->getSprite().setScale(0.5f, 0.5f);
-        }
+        obstacle->AddAnimation("WalkLeft", "assets/Idle.png", sf::Vector2i(7, 1), true);
+        obstacle->currentAnimation = obstacle->Animations["WalkLeft"];
         obstacle->SetCollisionShape(); // Ensure collision shape is set
     }
 

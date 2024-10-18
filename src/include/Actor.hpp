@@ -19,7 +19,7 @@ public:
 
     // Each actor needs animations to come alive in the levels of the game.
     // Each animation has a name, number of frames and a flag to determine whether the animation should loop or not.
-    void AddAnimation(const std::string animationName, sf::Vector2i numberFrames, bool loopAnimation);
+    void AddAnimation(const std::string animationName,const std::string& AnimationTexturePath, sf::Vector2i numberFrames, bool loopAnimation);
 
 
 
