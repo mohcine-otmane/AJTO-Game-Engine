@@ -29,7 +29,7 @@ bool Animation::setSprite(const std::string& spritePath) {
 void Animation::setFrames(bool reversed) {
     sf::Vector2u textureSize = AnimationTexture.getSize();
     sf::Vector2i frameSize(textureSize.x / NumberFrames.x, textureSize.y / NumberFrames.y);
-
+    FrameSize = frameSize;
     std::vector<Frame> tempFrames; // Temporary vector to hold frames before reversing
 
     for (int i = 0; i < NumberFrames.x; ++i) {

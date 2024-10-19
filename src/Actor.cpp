@@ -18,21 +18,21 @@ void Actor::AddAnimation(std::string animationName, const std::string& Animation
 void Actor::Update() {
     if (currentAnimation) {
         currentAnimation->getSprite().setPosition(position);
-
+        // this->CollisionShape->setPosition(this->currentAnimation->getSprite().getOrigin());  // Initially position it at the actor's position
+        // currentAnimation->getSprite().rotate(1);
         // Update the collision shape to match the sprite size and position
         sf::FloatRect spriteBounds = currentAnimation->getSprite().getGlobalBounds();
-        this->CollisionShape->setSize(sf::Vector2f(spriteBounds.width-100, spriteBounds.height-50));  // Fit shape to the sprite, I have done it manually (not good)
-        this->CollisionShape->setPosition(spriteBounds.left+50, spriteBounds.top+50);  // Position shape with the sprite
+        this->CollisionShape->setSize(sf::Vector2f(spriteBounds.width, spriteBounds.height));  // Fit shape to the sprite, I have done it manually (not good)
+        this->CollisionShape->setPosition(spriteBounds.left, spriteBounds.top);  // Position shape with the sprite
+        
     }
 }
 
 // Set the collision shape's size and position based on the sprite's dimensions
 void Actor::SetCollisionShape() {
     if (currentAnimation) {
-        sf::FloatRect spriteBounds = currentAnimation->getSprite().getGlobalBounds();
-        // this->CollisionShape->setSize(sf::Vector2f(spriteBounds.width-50, spriteBounds.height-50));  // Match the sprite's size
         this->CollisionShape->setFillColor(sf::Color(255, 255, 255, 50));  // Set transparent color for visualization
-        this->CollisionShape->setPosition(this->position);  // Initially position it at the actor's position
+        currentAnimation->getSprite().setOrigin(position.x+currentAnimation->getFrameSize().x/2,position.y+currentAnimation->getFrameSize().y/2);
     }
 }
 
@@ -71,7 +71,7 @@ void Actor::CheckCollision(Actor* actor) {
 // Render both the sprite and its collision shape (for debugging)
 void Actor::Render(sf::RenderWindow* window) {
     window->draw(currentAnimation->getSprite());  // Render the actor's sprite
-    window->draw(*CollisionShape);  // Render the collision shape for debugging purposes
+    // window->draw(*CollisionShape);  // Render the collision shape for debugging purposes
 }
 
 // Destructor to clean up dynamically allocated memory

@@ -33,6 +33,10 @@ public:
     
     bool playAnimation(float deltaTime);
 
+    sf::Vector2i getFrameSize() {
+        return FrameSize;
+    }
+
     sf::Sprite& getSprite() { return AnimationSprite; } // This is a getter function that we use for debugging
 
 private:
@@ -42,6 +46,7 @@ private:
     std::vector<Frame> VecFrames; // This is the vector in which we store all the frames of the animation sprite.
     sf::Vector2i NumberFrames; // This is a vector2i (int, int) because the animation sprite might have raw and columns of frames.
     int currentFrame;
+    sf::Vector2i FrameSize;
     float elapsedTime;
     bool LoopAnimation = true;
 };
